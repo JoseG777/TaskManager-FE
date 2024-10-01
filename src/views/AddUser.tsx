@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import '../styles/AddUser.css'
 
 const AddUser: React.FC = () => {
   const [email, setEmail] = useState<string>('')
@@ -11,7 +12,6 @@ const AddUser: React.FC = () => {
 
     try {
       const res = await axios.post(addUserRoute, { email })
-
       setResponse(`User added successfully! User ID: ${res.data.user_id}`)
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
@@ -23,8 +23,8 @@ const AddUser: React.FC = () => {
   }
 
   return (
-    <div>
-      <h1>Add User</h1>
+    <div className='container'>
+      <h1 className='heading'>Add User</h1>
       <form onSubmit={handleAddUser}>
         <input
           type='email'
@@ -32,11 +32,14 @@ const AddUser: React.FC = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className='inputField'
         />
-        <button type='submit'>Submit</button>
+        <button type='submit' className='button'>
+          Submit
+        </button>
       </form>
 
-      <p>{response}</p>
+      {response && <p className='response'>{response}</p>}
     </div>
   )
 }
